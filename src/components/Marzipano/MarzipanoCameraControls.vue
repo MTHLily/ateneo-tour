@@ -50,7 +50,6 @@ export default {
   props: ["velocity", "friction"],
   methods: {
     initialize(viewer) {
-      console.log(this.velocity, this.viewer);
       var controls = viewer.controls();
       controls.registerMethod(
         "upElement",
