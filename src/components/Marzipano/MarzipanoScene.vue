@@ -8,6 +8,7 @@
 import Marzipano from "marzipano";
 import { createApp } from "vue";
 import InfoHotspot from "./Hotspots/InfoHotspot.vue";
+import LinkHotspot from "./Hotspots/LinkHotspot.vue";
 
 export default {
   props: {
@@ -21,6 +22,7 @@ export default {
     initialize(viewer) {
       var sceneData = this.sceneData;
 
+      // scene setup
       var urlPrefix = "tiles";
       var source = Marzipano.ImageUrlSource.fromString(
         urlPrefix + "/" + sceneData.id + "/{z}/{f}/{y}/{x}.jpg",
@@ -44,15 +46,27 @@ export default {
         view: view,
       });
 
-      // add hotspots
-      sceneData.infoHotspots.forEach(hotspot => {
+      return {
+        data: this.sceneData,
+        scene: this.scene,
+        view: view
+      };
+    },
+    addHotspots(scenes) {
+      // info hotspots
+      this.sceneData.infoHotspots.forEach(hotspot => {
         let wrapper = document.createDocumentFragment();
         let h = createApp(InfoHotspot, {hotspotData: hotspot}).mount(wrapper);
         h.initialize(this.scene);
       });
 
-      return this.scene;
-    },
+      // link hotspots
+      this.sceneData.linkHotspots.forEach(hotspot => {
+        let wrapper = document.createDocumentFragment();
+        let h = createApp(LinkHotspot, {hotspotData: hotspot}).mount(wrapper);
+        h.initialize(this.scene, scenes);
+      });
+    }
   },
   data() {
     return {
