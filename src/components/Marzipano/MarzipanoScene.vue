@@ -6,6 +6,8 @@
 
 <script>
 import Marzipano from "marzipano";
+import { createApp } from "vue";
+import InfoHotspot from "./Hotspots/InfoHotspot.vue";
 
 export default {
   props: {
@@ -40,6 +42,13 @@ export default {
         source: source,
         geometry: geometry,
         view: view,
+      });
+
+      // add hotspots
+      sceneData.infoHotspots.forEach(hotspot => {
+        let wrapper = document.createDocumentFragment();
+        let h = createApp(InfoHotspot, {hotspotData: hotspot}).mount(wrapper);
+        h.initialize(this.scene);
       });
 
       return this.scene;

@@ -48,15 +48,15 @@ export default {
   components: { MarzipanoCameraControls, MarzipanoScene },
   mounted() {
     // Initialize the viewer
-    this.viewer = new Marzipano.Viewer(
+    const viewer = new Marzipano.Viewer(
       document.querySelector("#pano"),
       this.viewerOpts
     );
 
-    var scene = this.$refs.sceneTest.initialize(this.viewer);
+    var scene = this.$refs.sceneTest.initialize(viewer);
 
     // Initialize the viewer
-    this.$refs.cameraControls.initialize(this.viewer);
+    this.$refs.cameraControls.initialize(viewer);
 
     scene.switchTo();
   },
