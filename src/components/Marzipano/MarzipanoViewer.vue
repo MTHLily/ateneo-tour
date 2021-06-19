@@ -3,10 +3,18 @@
     <div ref="pano" id="pano"></div>
   </div>
   <div id="sceneList">
-    <ul v-for="(scene, index) in sceneData.scenes" :key="scene.id" class="scenes">
+    <ul
+      v-for="(scene, index) in sceneData.scenes"
+      :key="scene.id"
+      class="scenes"
+    >
       <marzipano-scene
         :sceneData="scene"
-        :ref="el => { sceneElements[index] = el }"
+        :ref="
+          (el) => {
+            sceneElements[index] = el;
+          }
+        "
       ></marzipano-scene>
     </ul>
   </div>
@@ -48,7 +56,6 @@ import MarzipanoScene from "./MarzipanoScene.vue";
 export default {
   components: { MarzipanoCameraControls, MarzipanoScene },
   mounted() {
-
     // viewer setup
     const viewer = new Marzipano.Viewer(
       document.querySelector("#pano"),
@@ -56,12 +63,12 @@ export default {
     );
 
     // Initialize scenes
-    this.scenes = this.sceneElements.map(scene => {
-      return scene.initialize(viewer)
+    this.scenes = this.sceneElements.map((scene) => {
+      return scene.initialize(viewer);
     });
 
-    this.sceneElements.forEach(scene => {
-      scene.addHotspots(this.scenes)
+    this.sceneElements.forEach((scene) => {
+      scene.addHotspots(this.scenes);
     });
 
     // Initialize the viewer
@@ -69,7 +76,7 @@ export default {
 
     // Default scene
     viewer.switchScene(viewer.listScenes()[0]);
-    console.log(viewer.listScenes()[0])
+    console.log(viewer.listScenes()[0]);
   },
   data: function() {
     return {
@@ -85,7 +92,7 @@ export default {
       },
       sceneData: APP_DATA,
       sceneElements: ref([]),
-      scenes: ref([])
+      scenes: ref([]),
     };
   },
 };
