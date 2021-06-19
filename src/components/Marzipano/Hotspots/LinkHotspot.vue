@@ -1,39 +1,45 @@
 <template>
-    <div class="hotspot" ref="hotspotEl" @click="changeScene">
-        <img src="img/link.png" class="icon" />
-        <div v-if="targetScene" class="hotspot-tooltip tooltip">
-            {{ targetScene.data.name }}
-        </div>
+  <div class="link-hotspot" ref="hotspotEl" @click="changeScene">
+    <img src="img/link.png" class="icon" />
+    <div v-if="targetScene" class="hotspot-tooltip tooltip">
+      {{ targetScene.data.name }}
     </div>
+  </div>
 </template>
 
 <script>
-
 export default {
-    name: 'InfoHotspot',
-    props: { hotspotData: Object },
-    methods: {
-        initialize(scene, sceneList) {
-            scene.hotspotContainer().createHotspot( this.$el, {yaw: this.hotspotData.yaw, pitch: this.hotspotData.pitch});
-            this.$data.targetScene = sceneList.find(scene => scene.data.id === this.hotspotData.target);
-        },
-        changeScene() {
-            this.targetScene.scene.switchTo();
-        }
+  name: "InfoHotspot",
+  props: { hotspotData: Object },
+  methods: {
+    initialize(scene, sceneList) {
+      scene
+        .hotspotContainer()
+        .createHotspot(this.$el, {
+          yaw: this.hotspotData.yaw,
+          pitch: this.hotspotData.pitch,
+        });
+      this.$data.targetScene = sceneList.find(
+        (scene) => scene.data.id === this.hotspotData.target
+      );
     },
-    data() {
-        return {
-            targetScene: null,
-            showModal: false
-        }
-    }
-}
+    changeScene() {
+      this.targetScene.scene.switchTo();
+    },
+  },
+  data() {
+    return {
+      targetScene: null,
+      showModal: false,
+    };
+  },
+};
 </script>
 
 <style scoped>
 /* Link hotspot */
 
-.hotspot {
+.link-hotspot {
   width: 60px;
   height: 60px;
   margin-left: -30px;
@@ -43,11 +49,11 @@ export default {
   transition: opacity 0.2s;
 }
 
-.no-touch .hotspot:hover {
+.no-touch .link-hotspot:hover {
   opacity: 1;
 }
 
-.mobile .hotspot {
+.mobile .link-hotspot {
   width: 70px;
   height: 70px;
 }
@@ -73,8 +79,8 @@ export default {
 
   border-radius: 5px;
 
-  background-color: rgb(58,68,84);
-  background-color: rgba(58,68,84,0.8);
+  background-color: rgb(58, 68, 84);
+  background-color: rgba(58, 68, 84, 0.8);
 
   color: #fff;
 
@@ -90,21 +96,17 @@ export default {
   -webkit-transform: translateX(-8px);
   transform: translateX(-8px);
 
-  -webkit-transition: -ms-transform 0.3s,
-                      -webkit-transform 0.3s,
-                      transform 0.3s,
-                      opacity 0.3s;
-  transition: -ms-transform 0.3s,
-              -webkit-transform 0.3s,
-              transform 0.3s,
-              opacity 0.3s;
+  -webkit-transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s,
+    opacity 0.3s;
+  transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s,
+    opacity 0.3s;
 }
 
-.mobile .hotspot {
+.mobile .link-hotspot {
   top: 19px; /* ( 70 - (16 + 2*8) ) / 2 */
 }
 
-.no-touch .hotspot:hover .tooltip {
+.no-touch .link-hotspot:hover .tooltip {
   opacity: 1;
   -ms-transform: translateX(0);
   -webkit-transform: translateX(0);
@@ -115,7 +117,7 @@ export default {
 .tooltip {
   pointer-events: none;
 }
-.no-touch .hotspot:hover .tooltip {
+.no-touch .link-hotspot:hover .tooltip {
   pointer-events: all;
 }
 
@@ -123,7 +125,7 @@ export default {
 .tooltip-fallback .tooltip {
   display: none;
 }
-.no-touch .tooltip-fallback .hotspot:hover .tooltip {
+.no-touch .tooltip-fallback .link-hotspot:hover .tooltip {
   display: block;
 }
 </style>

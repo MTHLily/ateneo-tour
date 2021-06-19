@@ -1,5 +1,5 @@
 <template>
-  <div class="hotspot" ref="hotspotEl">
+  <div class="info-hotspot" ref="hotspotEl">
     <div class="header" @click="onToggle">
       <div class="icon-wrapper">
         <img src="img/info.png" class="icon" />

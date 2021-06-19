@@ -1,23 +1,23 @@
-/* Info hotspot */
+/* Info info-hotspot */
 
-.hotspot {
+.info-hotspot {
   line-height: 1.2em;
   opacity: 0.9;
   -webkit-transition: opacity 0.2s 0.2s;
   transition: opacity 0.2s 0.2s;
 }
 
-.no-touch .hotspot:hover {
+.no-touch .info-hotspot:hover {
   opacity: 1;
   -webkit-transition: opacity 0.2s;
   transition: opacity 0.2s;
 }
 
-.hotspot.visible {
+.info-hotspot.visible {
   opacity: 1;
 }
 
-.hotspot .header {
+.info-hotspot .header {
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -28,21 +28,21 @@
   transition: width 0.3s ease-in-out 0.5s, border-radius 0.3s ease-in-out 0.5s;
 }
 
-.mobile .hotspot .header {
+.mobile .info-hotspot .header {
   width: 50px;
   height: 50px;
   border-radius: 25px;
 }
 
-.desktop.no-touch .hotspot .header:hover {
+.desktop.no-touch .info-hotspot .header:hover {
   width: 260px;
   border-radius: 5px;
   -webkit-transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out;
   transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out;
 }
 
-.desktop .hotspot.visible .header,
-.desktop.no-touch .hotspot.visible .header:hover {
+.desktop .info-hotspot.visible .header,
+.desktop.no-touch .info-hotspot.visible .header:hover {
   width: 260px;
   border-radius: 5px;
   border-top-right-radius: 0;
@@ -52,23 +52,23 @@
   transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out;
 }
 
-.hotspot .icon-wrapper {
+.info-hotspot .icon-wrapper {
   width: 40px;
   height: 40px;
 }
 
-.mobile .hotspot .icon-wrapper {
+.mobile .info-hotspot .icon-wrapper {
   width: 50px;
   height: 50px;
 }
 
-.hotspot .icon {
+.info-hotspot .icon {
   width: 90%;
   height: 90%;
   margin: 5%;
 }
 
-.hotspot .title-wrapper {
+.info-hotspot .title-wrapper {
   position: absolute;
   left: 40px;
   top: 0;
@@ -80,22 +80,22 @@
   transition: width 0s 0.4s, padding 0s 0.4s;
 }
 
-.desktop .hotspot.visible .title-wrapper,
-.desktop.no-touch .hotspot .header:hover .title-wrapper {
+.desktop .info-hotspot.visible .title-wrapper,
+.desktop.no-touch .info-hotspot .header:hover .title-wrapper {
   width: 220px;
   padding: 0 5px;
   -webkit-transition: width 0s 0.4s, padding 0s 0.4s;
   transition: width 0s 0.4s, padding 0s 0.4s;
 }
 
-.hotspot .title-wrapper:before {
+.info-hotspot .title-wrapper:before {
   content: "";
   display: inline-block;
   vertical-align: middle;
   height: 100%;
 }
 
-.hotspot .title {
+.info-hotspot .title {
   display: inline-block;
   vertical-align: middle;
 
@@ -105,7 +105,7 @@
   user-select: text;
 }
 
-.hotspot .close-wrapper {
+.info-hotspot .close-wrapper {
   position: absolute;
   left: 260px;
   top: 0;
@@ -126,7 +126,7 @@
     transform 0.3s 0.3s, visibility 0s 0.6s;
 }
 
-.desktop .hotspot.visible .close-wrapper {
+.desktop .info-hotspot.visible .close-wrapper {
   visibility: visible;
   -ms-transform: perspective(200px) rotateY(0deg);
   -webkit-transform: perspective(200px) rotateY(0deg);
@@ -137,13 +137,13 @@
     visibility 0s 0s;
 }
 
-.hotspot .close-icon {
+.info-hotspot .close-icon {
   width: 70%;
   height: 70%;
   margin: 15%;
 }
 
-.hotspot .text {
+.info-hotspot .text {
   position: absolute;
   width: 300px;
   height: auto;
@@ -174,7 +174,7 @@
   user-select: text;
 }
 
-.desktop .hotspot.visible .text {
+.desktop .info-hotspot.visible .text {
   visibility: visible;
   -ms-transform: perspective(200px) rotateX(0deg);
   -webkit-transform: perspective(200px) rotateX(0deg);
@@ -185,7 +185,7 @@
     transform 0.3s 0.3s, visibility 0s 0s;
 }
 
-/* Info hotspot modal */
+/* Info info-hotspot modal */
 
 .desktop .modal {
   display: none;
