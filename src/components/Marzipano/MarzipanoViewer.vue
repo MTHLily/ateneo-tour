@@ -2,22 +2,19 @@
   <div class="marzipano-viewer-container">
     <div ref="pano" id="pano"></div>
   </div>
-  <div id="sceneList">
-    <ul
+  <marzipano-scene-list>
+    <marzipano-scene
       v-for="(scene, index) in sceneData.scenes"
       :key="scene.id"
-      class="scenes"
-    >
-      <marzipano-scene
-        :sceneData="scene"
-        :ref="
-          (el) => {
-            sceneElements[index] = el;
-          }
-        "
-      ></marzipano-scene>
-    </ul>
-  </div>
+      :disabled="scene.disabled"
+      :sceneData="scene"
+      :ref="
+        (el) => {
+          sceneElements[index] = el;
+        }
+      "
+    ></marzipano-scene>
+  </marzipano-scene-list>
 
   <div id="titleBar">
     <h1 class="sceneName"></h1>
@@ -33,11 +30,6 @@
     <img class="icon on" src="img/windowed.png" />
   </a>
 
-  <a href="javascript:void(0)" id="sceneListToggle">
-    <img class="icon off" src="img/expand.png" />
-    <img class="icon on" src="img/collapse.png" />
-  </a>
-
   <marzipano-camera-controls
     :velocity="cameraSpeed.velocity"
     :friction="cameraSpeed.friction"
@@ -50,11 +42,12 @@
 var Marzipano = require("marzipano");
 import { ref } from "vue";
 import APP_DATA from "../../assets/data/data";
-import MarzipanoCameraControls from "./MarzipanoCameraControls.vue";
+import MarzipanoCameraControls from "./UI/MarzipanoCameraControls.vue";
+import MarzipanoSceneList from "./UI/MarzipanoSceneList.vue";
 import MarzipanoScene from "./MarzipanoScene.vue";
 
 export default {
-  components: { MarzipanoCameraControls, MarzipanoScene },
+  components: { MarzipanoCameraControls, MarzipanoSceneList, MarzipanoScene },
   mounted() {
     // viewer setup
     const viewer = new Marzipano.Viewer(

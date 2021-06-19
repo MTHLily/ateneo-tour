@@ -1,5 +1,10 @@
 <template>
-  <a href="javascript:void(0)" class="scene">
+  <a
+    href="javascript:void(0)"
+    class="scene"
+    @click="switchScene"
+    :class="{ disabled: disabled }"
+  >
     <li class="text">{{ sceneData.name }}</li>
   </a>
 </template>
@@ -49,24 +54,27 @@ export default {
       return {
         data: this.sceneData,
         scene: this.scene,
-        view: view
+        view: view,
       };
     },
     addHotspots(scenes) {
       // info hotspots
-      this.sceneData.infoHotspots.forEach(hotspot => {
+      this.sceneData.infoHotspots.forEach((hotspot) => {
         let wrapper = document.createDocumentFragment();
-        let h = createApp(InfoHotspot, {hotspotData: hotspot}).mount(wrapper);
+        let h = createApp(InfoHotspot, { hotspotData: hotspot }).mount(wrapper);
         h.initialize(this.scene);
       });
 
       // link hotspots
-      this.sceneData.linkHotspots.forEach(hotspot => {
+      this.sceneData.linkHotspots.forEach((hotspot) => {
         let wrapper = document.createDocumentFragment();
-        let h = createApp(LinkHotspot, {hotspotData: hotspot}).mount(wrapper);
+        let h = createApp(LinkHotspot, { hotspotData: hotspot }).mount(wrapper);
         h.initialize(this.scene, scenes);
       });
-    }
+    },
+    switchScene() {
+      this.scene.switchTo();
+    },
   },
   data() {
     return {
