@@ -5,15 +5,13 @@
         <img src="img/info.png" class="icon" />
       </div>
       <div class="title-wrapper">
-        <div class="title">{{ hotspotData.title }}</div>
+        <div class="title" v-html="hotspotData.title"></div>
       </div>
       <div class="close-wrapper">
         <img src="img/close.png" class="close-icon" />
       </div>
     </div>
-    <div class="text">
-      {{ hotspotData.text }}
-    </div>
+    <div class="text" v-html="hotspotData.text"></div>
 
     <teleport to="body">
       <div v-if="showModal" class="modal">
@@ -22,15 +20,13 @@
             <img src="img/info.png" class="icon" />
           </div>
           <div class="title-wrapper">
-            <div class="title">{{ hotspotData.title }}</div>
+            <div class="title" v-html="hotspotData.title"></div>
           </div>
           <div class="close-wrapper" @click="onToggle">
             <img src="img/close.png" class="close-icon" />
           </div>
         </div>
-        <div class="text">
-          {{ hotspotData.text }}
-        </div>
+        <div class="text" v-html="hotspotData.text"></div>
       </div>
     </teleport>
   </div>
