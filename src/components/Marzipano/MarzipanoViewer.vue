@@ -17,7 +17,7 @@
   </marzipano-scene-list>
 
   <div id="titleBar">
-    <h1 class="sceneName"></h1>
+    <h1 class="sceneName" v-if="scenes.length"> {{ getCurrentSceneWithData().data.name }} </h1>
   </div>
 
   <a href="javascript:void(0)" id="autorotateToggle">
@@ -55,6 +55,9 @@ export default {
       this.viewerOpts
     );
 
+    // used to access viewer in other methods
+    this.viewer = viewer
+
     // Initialize scenes
     this.scenes = this.sceneElements.map((scene) => {
       return scene.initialize(viewer);
@@ -64,12 +67,23 @@ export default {
       scene.addHotspots(this.scenes);
     });
 
+    console.log(this.scenes[0].data.name)
+
     // Initialize the viewer
     this.$refs.cameraControls.initialize(viewer);
 
     // Default scene
     viewer.switchScene(viewer.listScenes()[0]);
-    console.log(viewer.listScenes()[0]);
+    //console.log(viewer.listScenes()[0]);
+  },
+  methods: {
+    getCurrentSceneWithData() {
+      var currentScene = this.viewer.scene();
+
+      return this.scenes.find(
+        (scene) => scene.scene === currentScene
+      );
+    }
   },
   data: function() {
     return {
@@ -85,7 +99,7 @@ export default {
       },
       sceneData: APP_DATA,
       sceneElements: ref([]),
-      scenes: ref([]),
+      scenes: ref([])
     };
   },
 };
