@@ -3,7 +3,7 @@
     href="javascript:void(0)"
     class="scene"
     @click="switchScene"
-    :class="{ disabled: disabled }"
+    :class="{ disabled: disabled, current: isCurrent }"
   >
     <li class="text">{{ sceneData.name }}</li>
   </a>
@@ -44,6 +44,12 @@ export default {
       default: false,
     },
     sceneData: {},
+    currentSceneTarget: {},
+  },
+  computed: {
+    isCurrent() {
+      return this.sceneData.id === this.currentSceneTarget;
+    },
   },
   emits: ["sceneUpdateTarget"],
   mounted() {

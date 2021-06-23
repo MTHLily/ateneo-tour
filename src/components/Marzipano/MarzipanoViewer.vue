@@ -8,6 +8,7 @@
       :key="scene.id"
       :disabled="scene.disabled"
       :sceneData="scene"
+      :currentSceneTarget="currentSceneTarget"
       @sceneUpdateTarget="switchSceneByTarget"
       :ref="
         (el) => {
@@ -96,6 +97,7 @@ export default {
 
     // Default scene
     viewer.switchScene(viewer.listScenes()[0]);
+    this.currentSceneTarget = this.sceneData[0].id;
   },
   methods: {
     // Gets the scene currently in view
@@ -112,6 +114,8 @@ export default {
       var targetSceneData = this.findSceneDataByTarget(target);
 
       var targetScene = this.scenes[targetSceneData.index];
+
+      this.currentSceneTarget = target;
 
       // Reset the view parameters to its original state.
       // Possible Upgrade: expand target to include additional view
@@ -144,6 +148,7 @@ export default {
         velocity: 0.7,
         friction: 3,
       },
+      currentSceneTarget: "",
       viewer: null,
       viewerOpts: {
         controls: {
