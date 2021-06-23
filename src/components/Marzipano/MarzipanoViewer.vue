@@ -17,7 +17,9 @@
   </marzipano-scene-list>
 
   <div id="titleBar">
-    <h1 class="sceneName" v-if="scenes.length"> {{ getCurrentSceneWithData().data.name }} </h1>
+    <h1 class="sceneName" v-if="scenes.length">
+      {{ getCurrentSceneWithData().data.name }}
+    </h1>
   </div>
 
   <a href="javascript:void(0)" id="autorotateToggle">
@@ -50,13 +52,15 @@ export default {
   components: { MarzipanoCameraControls, MarzipanoSceneList, MarzipanoScene },
   mounted() {
     // viewer setup
+    // viewer must be initialized as a non-vuejs variable because
+    // hotspots break if it isn't
     const viewer = new Marzipano.Viewer(
       document.querySelector("#pano"),
       this.viewerOpts
     );
 
     // used to access viewer in other methods
-    this.viewer = viewer
+    this.viewer = viewer;
 
     // Initialize scenes
     this.scenes = this.sceneElements.map((scene) => {
@@ -67,39 +71,44 @@ export default {
       scene.addHotspots(this.scenes);
     });
 
-    console.log(this.scenes[0].data.name)
+    console.log(this.scenes[0].data.name);
 
     // Initialize the viewer
     this.$refs.cameraControls.initialize(viewer);
 
     // Default scene
     viewer.switchScene(viewer.listScenes()[0]);
-    //console.log(viewer.listScenes()[0]);
   },
   methods: {
+    // Gets the scene currently in view
     getCurrentSceneWithData() {
       var currentScene = this.viewer.scene();
 
-      return this.scenes.find(
-        (scene) => scene.scene === currentScene
-      );
-    }
+      return this.scenes.find((scene) => scene.scene === currentScene);
+    },
   },
   data: function() {
     return {
+      // Settings for the camera controls
       cameraSpeed: {
         velocity: 0.7,
         friction: 3,
       },
       viewer: null,
+
       viewerOpts: {
         controls: {
           mouseViewMode: "drag",
         },
       },
+      // Data imported from assets/data/data.js
       sceneData: APP_DATA,
+
+      // VueJS Marzipano Scene Components
       sceneElements: ref([]),
-      scenes: ref([])
+
+      // Marzipano Scenes
+      scenes: ref([]),
     };
   },
 };
