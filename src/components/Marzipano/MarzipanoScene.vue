@@ -7,21 +7,40 @@
   >
     <li class="text">{{ sceneData.name }}</li>
   </a>
+  <info-hotspot
+    v-for="(info, index) in sceneData.infoHotspots"
+    :key="`${info.yaw}${info.pitch}`"
+    :hotspotData="info"
+    :ref="
+      (el) => {
+        infoHotspots[index] = el;
+      }
+    "
+  ></info-hotspot>
 </template>
 
 <script>
 import Marzipano from "marzipano";
-import { createApp } from "vue";
+import { createApp, ref } from "vue";
 import InfoHotspot from "./Hotspots/InfoHotspot.vue";
 import LinkHotspot from "./Hotspots/LinkHotspot.vue";
 
 export default {
+  components: { InfoHotspot },
   props: {
     disabled: {
       type: Boolean,
       default: false,
     },
     sceneData: {},
+  },
+  mounted() {
+    this.$nextTick(() => {
+      console.log("Scene", this.scene);
+      this.infoHotspots.forEach((info) => {
+        info.initialize(this.scene);
+      });
+    });
   },
   methods: {
     initialize(viewer) {
@@ -58,12 +77,12 @@ export default {
       };
     },
     addHotspots(scenes) {
-      // info hotspots
-      this.sceneData.infoHotspots.forEach((hotspot) => {
-        let wrapper = document.createDocumentFragment();
-        let h = createApp(InfoHotspot, { hotspotData: hotspot }).mount(wrapper);
-        h.initialize(this.scene);
-      });
+      // // info hotspots
+      // this.sceneData.infoHotspots.forEach((hotspot) => {
+      //   let wrapper = document.createDocumentFragment();
+      //   let h = createApp(InfoHotspot, { hotspotData: hotspot }).mount(wrapper);
+      //   h.initialize(this.scene);
+      // });
 
       // link hotspots
       this.sceneData.linkHotspots.forEach((hotspot) => {
@@ -79,6 +98,7 @@ export default {
   data() {
     return {
       scene: null,
+      infoHotspots: ref([]),
     };
   },
 };

@@ -10,7 +10,7 @@
 <script>
 export default {
   name: "InfoHotspot",
-  props: { hotspotData: Object },
+  props: { hotspotData: Object, viewer: {} },
   methods: {
     initialize(scene, sceneList) {
       scene.hotspotContainer().createHotspot(this.$el, {

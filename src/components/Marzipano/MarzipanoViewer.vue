@@ -71,8 +71,6 @@ export default {
       scene.addHotspots(this.scenes);
     });
 
-    console.log(this.scenes[0].data.name);
-
     // Initialize the viewer
     this.$refs.cameraControls.initialize(viewer);
 
