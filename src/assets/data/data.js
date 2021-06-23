@@ -2087,12 +2087,6 @@ var APP_DATA = {
       },
       linkHotspots: [
         {
-          yaw: -1.394229900370906,
-          pitch: 0.05494712533518786,
-          rotation: 0.7853981633974483,
-          target: "2-bellarmine---gisbert",
-        },
-        {
           yaw: -2.114282648181959,
           pitch: 0.06188198635175013,
           rotation: 0,

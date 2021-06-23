@@ -32,7 +32,6 @@
 
 <script>
 import Marzipano from "marzipano";
-// import { createApp, ref } from "vue";
 import { ref } from "vue";
 import InfoHotspot from "./Hotspots/InfoHotspot.vue";
 import LinkHotspot from "./Hotspots/LinkHotspot.vue";
@@ -49,7 +48,6 @@ export default {
   emits: ["sceneUpdateTarget"],
   mounted() {
     this.$nextTick(() => {
-      // console.log("Scene", this.scene);
       this.infoHotspots.forEach((info) => {
         info.initialize(this.scene);
       });
@@ -92,11 +90,22 @@ export default {
         view: view,
       };
     },
+
+    // Event handler when the scene in the scene list was clicked
+    // Originally just used the already stored scene object
+    // to switch scenes
+    // However, this was changed to use the @sceneUpdateTarget event
+    // For better consistency, and so scene changes are actually done
+    // In a single function
     switchScene() {
-      this.scene.switchTo();
+      this.switchSceneByTarget(this.sceneData.id);
     },
+
+    // Event handler for @sceneUpdateTarget
+    // Used when scene needs to be switched
+    // In MarzipanoScene, this is just being
+    // passed along from LinkHotspot to MarzipanoScene
     switchSceneByTarget(target) {
-      console.log("FROM SCENE", target);
       this.$emit("sceneUpdateTarget", target);
     },
   },

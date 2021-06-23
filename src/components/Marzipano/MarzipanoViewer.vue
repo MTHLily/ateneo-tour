@@ -1,6 +1,6 @@
 <template>
   <div class="marzipano-viewer-container">
-    <div ref="pano" id="pano"></div>
+    <div id="pano"></div>
   </div>
   <marzipano-scene-list>
     <marzipano-scene
@@ -28,11 +28,6 @@
     <img class="icon on" src="img/pause.png" />
   </a>
 
-  <a href="javascript:void(0)" id="fullscreenToggle">
-    <img class="icon off" src="img/fullscreen.png" />
-    <img class="icon on" src="img/windowed.png" />
-  </a>
-
   <marzipano-camera-controls
     :velocity="cameraSpeed.velocity"
     :friction="cameraSpeed.friction"
@@ -51,6 +46,10 @@ import MarzipanoScene from "./MarzipanoScene.vue";
 export default {
   components: { MarzipanoCameraControls, MarzipanoSceneList, MarzipanoScene },
   computed: {
+    // This whole function changes changes one thing
+    // sceneData: it adds the name of the target scene
+    // in linkHotspots array.
+    // If better way found, pls fix ty 😊
     cleanSceneData() {
       return this.sceneData.map((scene) => {
         const editedLinkHotspots = scene.linkHotspots.map((link) => {
@@ -92,7 +91,7 @@ export default {
       return scene.initialize(viewer);
     });
 
-    // Initialize the viewer
+    // Initialize the camera controls
     this.$refs.cameraControls.initialize(viewer);
 
     // Default scene
@@ -105,10 +104,25 @@ export default {
 
       return this.scenes.find((scene) => scene.scene === currentScene);
     },
+
+    // Event handler for @sceneUpdateTarget
+    // Finds the scene by target first
+    // Then switches the scene
     switchSceneByTarget(target) {
-      console.log("FROM VIEWER", target);
-      var targetScene = this.findSceneDataByTarget(target);
-      this.scenes[targetScene.index].scene.switchTo();
+      var targetSceneData = this.findSceneDataByTarget(target);
+
+      var targetScene = this.scenes[targetSceneData.index];
+
+      // Reset the view parameters to its original state.
+      // Possible Upgrade: expand target to include additional view
+      // parameters, so instead of the scene always resetting
+      // to its original view, it changes based on where you're from
+      // in the previous scene
+      targetScene.view.setParameters(
+        targetSceneData.scene.initialViewParameters
+      );
+
+      targetScene.scene.switchTo();
     },
     findSceneDataByTarget(target) {
       var targetScene = {};
@@ -131,7 +145,6 @@ export default {
         friction: 3,
       },
       viewer: null,
-
       viewerOpts: {
         controls: {
           mouseViewMode: "drag",
