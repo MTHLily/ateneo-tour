@@ -4,11 +4,11 @@
   </div>
   <marzipano-scene-list>
     <marzipano-scene
-      v-for="(scene, index) in sceneData.scenes"
+      v-for="(scene, index) in cleanSceneData"
       :key="scene.id"
       :disabled="scene.disabled"
       :sceneData="scene"
-      :sceneIndex="index"
+      @sceneUpdateTarget="switchSceneByTarget"
       :ref="
         (el) => {
           sceneElements[index] = el;
@@ -41,8 +41,7 @@
 </template>
 
 <script>
-// import Marzipano from "marzipano";
-var Marzipano = require("marzipano");
+import Marzipano from "marzipano";
 import { ref } from "vue";
 import APP_DATA from "../../assets/data/data";
 import MarzipanoCameraControls from "./UI/MarzipanoCameraControls.vue";
@@ -51,6 +50,31 @@ import MarzipanoScene from "./MarzipanoScene.vue";
 
 export default {
   components: { MarzipanoCameraControls, MarzipanoSceneList, MarzipanoScene },
+  computed: {
+    cleanSceneData() {
+      return this.sceneData.map((scene) => {
+        const editedLinkHotspots = scene.linkHotspots.map((link) => {
+          return {
+            yaw: link.yaw,
+            pitch: link.pitch,
+            rotation: link.rotation,
+            target: link.target,
+            targetName: this.findSceneDataByTarget(link.target).scene.name,
+          };
+        });
+        return {
+          id: scene.id,
+          name: scene.name,
+          levels: scene.levels,
+          faceSize: scene.faceSize,
+          disabled: scene.disabled,
+          initialViewParameters: scene.initialViewParameters,
+          linkHotspots: editedLinkHotspots,
+          infoHotspots: scene.infoHotspots,
+        };
+      });
+    },
+  },
   mounted() {
     // viewer setup
     // viewer must be initialized as a non-vuejs variable because
@@ -68,10 +92,6 @@ export default {
       return scene.initialize(viewer);
     });
 
-    this.sceneElements.forEach((scene) => {
-      scene.addHotspots(this.scenes);
-    });
-
     // Initialize the viewer
     this.$refs.cameraControls.initialize(viewer);
 
@@ -84,6 +104,23 @@ export default {
       var currentScene = this.viewer.scene();
 
       return this.scenes.find((scene) => scene.scene === currentScene);
+    },
+    switchSceneByTarget(target) {
+      console.log("FROM VIEWER", target);
+      var targetScene = this.findSceneDataByTarget(target);
+      this.scenes[targetScene.index].scene.switchTo();
+    },
+    findSceneDataByTarget(target) {
+      var targetScene = {};
+      this.sceneData.forEach((scene, index) => {
+        if (scene.id == target) {
+          targetScene = {
+            scene: scene,
+            index: index,
+          };
+        }
+      });
+      return targetScene;
     },
   },
   data: function() {
@@ -101,7 +138,7 @@ export default {
         },
       },
       // Data imported from assets/data/data.js
-      sceneData: APP_DATA,
+      sceneData: APP_DATA.scenes,
 
       // VueJS Marzipano Scene Components
       sceneElements: ref([]),

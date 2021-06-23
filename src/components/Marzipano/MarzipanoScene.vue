@@ -26,6 +26,7 @@
         linkHotspots[index] = el;
       }
     "
+    @sceneUpdateTarget="switchSceneByTarget"
   ></link-hotspot>
 </template>
 
@@ -44,10 +45,8 @@ export default {
       default: false,
     },
     sceneData: {},
-    sceneIndex: {
-      type: Number,
-    },
   },
+  emits: ["sceneUpdateTarget"],
   mounted() {
     this.$nextTick(() => {
       // console.log("Scene", this.scene);
@@ -93,23 +92,12 @@ export default {
         view: view,
       };
     },
-    addHotspots(scenes) {
-      console.log(scenes);
-      // // info hotspots
-      // this.sceneData.infoHotspots.forEach((hotspot) => {
-      //   let wrapper = document.createDocumentFragment();
-      //   let h = createApp(InfoHotspot, { hotspotData: hotspot }).mount(wrapper);
-      //   h.initialize(this.scene);
-      // });
-      // link hotspots
-      // this.sceneData.linkHotspots.forEach((hotspot) => {
-      //   let wrapper = document.createDocumentFragment();
-      //   let h = createApp(LinkHotspot, { hotspotData: hotspot }).mount(wrapper);
-      //   h.initialize(this.scene, scenes);
-      // });
-    },
     switchScene() {
       this.scene.switchTo();
+    },
+    switchSceneByTarget(target) {
+      console.log("FROM SCENE", target);
+      this.$emit("sceneUpdateTarget", target);
     },
   },
   data() {

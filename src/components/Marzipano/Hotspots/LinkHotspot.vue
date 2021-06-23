@@ -1,8 +1,8 @@
 <template>
   <div class="link-hotspot" ref="hotspotEl" @click="changeScene">
     <img src="img/link.png" class="icon" />
-    <div v-if="targetScene" class="hotspot-tooltip tooltip">
-      {{ targetScene.data.name }}
+    <div class="hotspot-tooltip tooltip">
+      {{ hotspotData.targetName }}
     </div>
   </div>
 </template>
@@ -11,6 +11,7 @@
 export default {
   name: "InfoHotspot",
   props: { hotspotData: Object, viewer: {} },
+  emits: ["sceneUpdateTarget"],
   methods: {
     // initialize(scene, sceneList) {
     //   scene.hotspotContainer().createHotspot(this.$el, {
@@ -28,8 +29,7 @@ export default {
       });
     },
     changeScene() {
-      // this.targetScene.scene.switchTo();
-      console.log("change-scene");
+      this.$emit("sceneUpdateTarget", this.hotspotData.target);
     },
   },
   data() {
