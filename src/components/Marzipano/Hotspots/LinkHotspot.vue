@@ -12,17 +12,24 @@ export default {
   name: "InfoHotspot",
   props: { hotspotData: Object, viewer: {} },
   methods: {
-    initialize(scene, sceneList) {
+    // initialize(scene, sceneList) {
+    //   scene.hotspotContainer().createHotspot(this.$el, {
+    //     yaw: this.hotspotData.yaw,
+    //     pitch: this.hotspotData.pitch,
+    //   });
+    //   this.$data.targetScene = sceneList.find(
+    //     (scene) => scene.data.id === this.hotspotData.target
+    //   );
+    // },
+    initialize(scene) {
       scene.hotspotContainer().createHotspot(this.$el, {
         yaw: this.hotspotData.yaw,
         pitch: this.hotspotData.pitch,
       });
-      this.$data.targetScene = sceneList.find(
-        (scene) => scene.data.id === this.hotspotData.target
-      );
     },
     changeScene() {
-      this.targetScene.scene.switchTo();
+      // this.targetScene.scene.switchTo();
+      console.log("change-scene");
     },
   },
   data() {

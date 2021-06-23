@@ -17,28 +17,45 @@
       }
     "
   ></info-hotspot>
+  <link-hotspot
+    v-for="(link, index) in sceneData.linkHotspots"
+    :key="`${link.yaw}${link.pitch}`"
+    :hotspotData="link"
+    :ref="
+      (el) => {
+        linkHotspots[index] = el;
+      }
+    "
+  ></link-hotspot>
 </template>
 
 <script>
 import Marzipano from "marzipano";
-import { createApp, ref } from "vue";
+// import { createApp, ref } from "vue";
+import { ref } from "vue";
 import InfoHotspot from "./Hotspots/InfoHotspot.vue";
 import LinkHotspot from "./Hotspots/LinkHotspot.vue";
 
 export default {
-  components: { InfoHotspot },
+  components: { InfoHotspot, LinkHotspot },
   props: {
     disabled: {
       type: Boolean,
       default: false,
     },
     sceneData: {},
+    sceneIndex: {
+      type: Number,
+    },
   },
   mounted() {
     this.$nextTick(() => {
-      console.log("Scene", this.scene);
+      // console.log("Scene", this.scene);
       this.infoHotspots.forEach((info) => {
         info.initialize(this.scene);
+      });
+      this.linkHotspots.forEach((link) => {
+        link.initialize(this.scene);
       });
     });
   },
@@ -77,19 +94,19 @@ export default {
       };
     },
     addHotspots(scenes) {
+      console.log(scenes);
       // // info hotspots
       // this.sceneData.infoHotspots.forEach((hotspot) => {
       //   let wrapper = document.createDocumentFragment();
       //   let h = createApp(InfoHotspot, { hotspotData: hotspot }).mount(wrapper);
       //   h.initialize(this.scene);
       // });
-
       // link hotspots
-      this.sceneData.linkHotspots.forEach((hotspot) => {
-        let wrapper = document.createDocumentFragment();
-        let h = createApp(LinkHotspot, { hotspotData: hotspot }).mount(wrapper);
-        h.initialize(this.scene, scenes);
-      });
+      // this.sceneData.linkHotspots.forEach((hotspot) => {
+      //   let wrapper = document.createDocumentFragment();
+      //   let h = createApp(LinkHotspot, { hotspotData: hotspot }).mount(wrapper);
+      //   h.initialize(this.scene, scenes);
+      // });
     },
     switchScene() {
       this.scene.switchTo();
@@ -99,6 +116,7 @@ export default {
     return {
       scene: null,
       infoHotspots: ref([]),
+      linkHotspots: ref([]),
     };
   },
 };

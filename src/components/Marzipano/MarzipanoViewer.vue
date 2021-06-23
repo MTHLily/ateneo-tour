@@ -8,6 +8,7 @@
       :key="scene.id"
       :disabled="scene.disabled"
       :sceneData="scene"
+      :sceneIndex="index"
       :ref="
         (el) => {
           sceneElements[index] = el;
