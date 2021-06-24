@@ -1,5 +1,5 @@
 <template>
-  <marzipano-viewer />
+  <marzipano-viewer :debug="true" />
 </template>
 
 <script>

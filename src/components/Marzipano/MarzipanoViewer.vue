@@ -1,6 +1,6 @@
 <template>
   <div class="marzipano-viewer-container">
-    <div id="pano"></div>
+    <div id="pano" @click="getCoordinates"></div>
   </div>
   <marzipano-scene-list>
     <marzipano-scene
@@ -75,6 +75,7 @@ export default {
       });
     },
   },
+  props: ["debug"],
   mounted() {
     // viewer setup
     // viewer must be initialized as a non-vuejs variable because
@@ -128,6 +129,9 @@ export default {
 
       targetScene.scene.switchTo();
     },
+
+    // Helper function. Gets the sceneData and index of the
+    // corresponding id
     findSceneDataByTarget(target) {
       var targetScene = {};
       this.sceneData.forEach((scene, index) => {
@@ -139,6 +143,19 @@ export default {
         }
       });
       return targetScene;
+    },
+
+    // Debug function.
+    // Gets the pitch and yaw based on the area clicked on the viewer.
+    getCoordinates(e) {
+      if (this.debug == false) return;
+
+      console.log(
+        this.viewer.view().screenToCoordinates({
+          x: e.clientX,
+          y: e.clientY,
+        })
+      );
     },
   },
   data: function() {
