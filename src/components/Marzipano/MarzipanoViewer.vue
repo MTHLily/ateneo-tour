@@ -151,10 +151,17 @@ export default {
       if (this.debug == false) return;
 
       console.log(
+        "Click:",
         this.viewer.view().screenToCoordinates({
           x: e.clientX,
           y: e.clientY,
-        })
+        }),
+        "Current View:",
+        {
+          fov: this.viewer.view().parameters().fov,
+          pitch: this.viewer.view().pitch(),
+          yaw: this.viewer.view().yaw(),
+        }
       );
     },
   },
