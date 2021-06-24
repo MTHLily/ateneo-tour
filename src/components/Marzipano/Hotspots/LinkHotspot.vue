@@ -1,6 +1,6 @@
 <template>
   <div class="link-hotspot" ref="hotspotEl" @click="changeScene">
-    <img src="img/link.png" class="icon" />
+    <img src="img/link.png" class="icon" :style="styleString" />
     <div class="hotspot-tooltip tooltip">
       {{ hotspotData.targetName }}
     </div>
@@ -12,6 +12,16 @@ export default {
   name: "InfoHotspot",
   props: { hotspotData: Object, viewer: {} },
   emits: ["sceneUpdateTarget"],
+  computed: {
+    styleString() {
+      var style = {
+        "-ms-transform": `rotate(${this.hotspotData.rotation}rad)`,
+        "-webkit-transform": `rotate(${this.hotspotData.rotation}rad)`,
+        transform: `rotate(${this.hotspotData.rotation}rad)`,
+      };
+      return style;
+    },
+  },
   methods: {
     initialize(scene) {
       scene.hotspotContainer().createHotspot(this.$el, {
