@@ -24,11 +24,9 @@
         </h1>
     </div>
 
-    <!-- <a href="javascript:void(0)" id="autorotateToggle">
-        <img class="icon off" src="img/play.png" />
-        <img class="icon on" src="img/pause.png" />
-    </a> -->
     <marzipano-rotate-toggle @toggle-rotate="toggleAutorotate" />
+
+    <img class="arisen-watermark" src="img/arisen_logo.png" />
 
     <marzipano-camera-controls
         :velocity="cameraSpeed.velocity"
