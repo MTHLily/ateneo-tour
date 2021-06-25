@@ -1828,14 +1828,7 @@ var APP_DATA = {
                         "This is where you can see the administrators of School of Arts and Sciences.",
                 },
                 {
-                    yaw: 3.061771512107617,
-                    pitch: 0.04184588414484125,
-                    title: "SON Office",
-                    text:
-                        "This is where you can see the administrators of School of Nursing.",
-                },
-                {
-                    yaw: 3.046879235683278,
+                    yaw: 3.046879235683279,
                     pitch: -0.05381877967350057,
                     title: "SON Office",
                     text:
