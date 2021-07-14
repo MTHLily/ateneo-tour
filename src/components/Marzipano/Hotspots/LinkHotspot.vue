@@ -1,9 +1,13 @@
 <template>
   <div class="link-hotspot" ref="hotspotEl" @click="changeScene">
-    <img src="img/link.png" class="icon" :style="styleString" />
-    <div class="hotspot-tooltip tooltip">
-      {{ hotspotData.targetName }}
-    </div>
+    <a-tooltip placement="right">
+      <template #title>
+        <span v-html="hotspotData.targetName"></span>
+      </template>
+      <a-button shape="circle">
+        <i class="fas fa-chevron-up"></i>
+      </a-button>
+    </a-tooltip>
   </div>
 </template>
 

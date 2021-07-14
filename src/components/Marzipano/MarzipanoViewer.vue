@@ -1,38 +1,62 @@
 <template>
-    <div class="marzipano-viewer-container">
-        <div id="pano" @click="getCoordinates"></div>
-    </div>
-    <marzipano-scene-list>
-        <marzipano-scene
-            v-for="(scene, index) in cleanSceneData"
-            :key="scene.id"
-            :disabled="scene.disabled"
-            :sceneData="scene"
-            :currentSceneTarget="currentSceneTarget"
-            @sceneUpdateTarget="switchSceneByTarget"
-            :ref="
-                el => {
-                    sceneElements[index] = el;
-                }
-            "
-        ></marzipano-scene>
-    </marzipano-scene-list>
+    <a-layout>
+        <a-layout-sider
+            :width="isSidebarCollapsed ? 0 : sidebarOpenWidth"
+            :style="{ overflow: 'auto', height: '100vh', zIndex: '999' }"
+        >
+            <marzipano-scene-list>
+                <marzipano-scene
+                    v-for="(scene, index) in cleanSceneData"
+                    :key="scene.id"
+                    :menuKey="index+1"
+                    :sceneData="scene"
+                    :currentSceneTarget="currentSceneTarget"
+                    @sceneUpdateTarget="switchSceneByTarget"
+                    :ref="
+                        el => {
+                            sceneElements[index] = el;
+                        }
+                    "
+                ></marzipano-scene>
+            </marzipano-scene-list>
+        </a-layout-sider>
 
-    <div id="titleBar">
-        <h1 class="sceneName" v-if="scenes.length">
-            {{ getCurrentSceneWithData().data.name }}
-        </h1>
-    </div>
+        <a-layout-content>
+            <div id="titleBar">
+                <div class="titleCard">
+                    <div>
+                        <span>Currently Viewing: </span>
+                        <span class="sceneName" v-if="scenes.length">
+                            {{ getCurrentSceneWithData().data.name }}
+                        </span>
+                    </div>
 
-    <marzipano-rotate-toggle @toggle-rotate="toggleAutorotate" />
+                    <span v-if="isSidebarCollapsed" class="viewScenes" @click="setCollapse(false)">
+                        <i class="fas fa-chevron-circle-right"></i>
+                        See locations
+                    </span>
+                    <span v-else class="viewScenes" @click="setCollapse(true)">
+                        <i class="fas fa-chevron-circle-left"></i>
+                        Close locations
+                    </span>
 
-    <img class="arisen-watermark" src="img/arisen_logo.png" />
+                </div>
+            </div>
 
-    <marzipano-camera-controls
-        :velocity="cameraSpeed.velocity"
-        :friction="cameraSpeed.friction"
-        ref="cameraControls"
-    ></marzipano-camera-controls>
+            <div class="marzipano-viewer-container">
+                <div id="pano" @click="getCoordinates"></div>
+            </div>
+
+            <div class="footer">
+                <marzipano-camera-controls
+                    :velocity="cameraSpeed.velocity"
+                    :friction="cameraSpeed.friction"
+                    ref="cameraControls"
+                ></marzipano-camera-controls>
+                <img class="arisen-watermark" src="img/arisen_logo.png" />
+            </div>
+        </a-layout-content>
+    </a-layout>
 </template>
 
 <script>
@@ -41,7 +65,6 @@ import { ref } from "vue";
 import APP_DATA from "../../assets/data/data";
 import MarzipanoCameraControls from "./UI/MarzipanoCameraControls.vue";
 import MarzipanoSceneList from "./UI/MarzipanoSceneList.vue";
-import MarzipanoRotateToggle from "./UI/MarzipanoRotateToggle.vue";
 import MarzipanoScene from "./MarzipanoScene.vue";
 
 export default {
@@ -49,7 +72,6 @@ export default {
         MarzipanoCameraControls,
         MarzipanoSceneList,
         MarzipanoScene,
-        MarzipanoRotateToggle,
     },
     computed: {
         // This whole function changes changes one thing
@@ -93,16 +115,6 @@ export default {
 
         // used to access viewer in other methods
         this.viewer = viewer;
-
-        // Set up autorotate, if enabled.
-        this.autorotate = Marzipano.autorotate({
-            yawSpeed: 0.03,
-            targetPitch: 0,
-            targetFov: Math.PI / 2,
-        });
-
-        this.viewer.startMovement(this.autorotate);
-        this.viewer.setIdleMovement(3000, this.autorotate);
 
         // Initialize scenes
         this.scenes = this.sceneElements.map(scene => {
@@ -180,18 +192,9 @@ export default {
                 }
             );
         },
-
-        toggleAutorotate(isRotating) {
-            if (!isRotating) {
-                //Stop Rotating
-                this.viewer.stopMovement();
-                this.viewer.setIdleMovement(Infinity);
-            } else {
-                //Start Rotating
-                this.viewer.startMovement(this.autorotate);
-                this.viewer.setIdleMovement(3000, this.autorotate);
-            }
-        },
+        setCollapse(isCollapsed) {
+            this.isSidebarCollapsed = isCollapsed;
+        }
     },
     data: function() {
         return {
@@ -215,10 +218,15 @@ export default {
 
             // Marzipano Scenes
             scenes: ref([]),
-            autorotate: null,
+
+            // Sidebar Controls
+            sidebarOpenWidth: 200,
+            isSidebarCollapsed: true,
         };
     },
 };
 </script>
 
-<style></style>
+<style scoped>
+    
+</style>

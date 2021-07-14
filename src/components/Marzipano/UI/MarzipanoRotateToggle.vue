@@ -1,9 +1,10 @@
 <template>
-    <a href="javascript:void(0)" id="autorotateToggle" @click="toggleRotate">
-        <img
-            class="icon off"
-            :src="`img/${isRotating ? 'pause' : 'play'}.png`"
-        />
+    <a href="javascript:void(0)" @click="toggleRotate">
+        <a-tooltip title="Autorotate" placement="left">
+            <a-button shape="circle" size="large" :type="isRotating ? 'primary' : 'danger'">
+                <i class="fas fa-sync-alt"></i>
+            </a-button>
+        </a-tooltip>
     </a>
 </template>
 
@@ -17,7 +18,7 @@ export default {
     },
     data() {
         return {
-            isRotating: true,
+            isRotating: false,
         };
     },
 };

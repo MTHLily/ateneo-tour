@@ -2,8 +2,17 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "./assets/css/reset.css";
 import "./assets/css/style.css";
-import "./assets/css/link_hotspot.css";
-import "./assets/css/info_hotspot.css";
-import "./assets/css/scene_list.css";
 
-createApp(App).mount("#app");
+import { Button, Card, Layout, Menu, Popover, Tooltip } from 'ant-design-vue';
+
+const app = createApp(App)
+
+app.config.productionTip = false;
+app.use(Button);
+app.use(Card);
+app.use(Layout);
+app.use(Menu);
+app.use(Popover);
+app.use(Tooltip);
+
+app.mount("#app");

@@ -1,33 +1,34 @@
 <template>
-  <a
-    href="javascript:void(0)"
-    class="scene"
-    @click="switchScene"
-    :class="{ disabled: disabled, current: isCurrent }"
-  >
-    <li class="text">{{ sceneData.name }}</li>
-  </a>
-  <info-hotspot
-    v-for="(info, index) in sceneData.infoHotspots"
-    :key="`${info.yaw}${info.pitch}`"
-    :hotspotData="info"
-    :ref="
-      (el) => {
-        infoHotspots[index] = el;
-      }
-    "
-  ></info-hotspot>
-  <link-hotspot
-    v-for="(link, index) in sceneData.linkHotspots"
-    :key="`${link.yaw}${link.pitch}`"
-    :hotspotData="link"
-    :ref="
-      (el) => {
-        linkHotspots[index] = el;
-      }
-    "
-    @sceneUpdateTarget="switchSceneByTarget"
-  ></link-hotspot>
+  <a-menu-item :key="menuKey">
+    <a
+      href="javascript:void(0)"
+      @click="switchScene"
+      :class="{ current: isCurrent }"
+    >
+      <span>{{ sceneData.name }}</span>
+    </a>
+    <info-hotspot
+      v-for="(info, index) in sceneData.infoHotspots"
+      :key="`${info.yaw}${info.pitch}`"
+      :hotspotData="info"
+      :ref="
+        (el) => {
+          infoHotspots[index] = el;
+        }
+      "
+    ></info-hotspot>
+    <link-hotspot
+      v-for="(link, index) in sceneData.linkHotspots"
+      :key="`${link.yaw}${link.pitch}`"
+      :hotspotData="link"
+      :ref="
+        (el) => {
+          linkHotspots[index] = el;
+        }
+      "
+      @sceneUpdateTarget="switchSceneByTarget"
+    ></link-hotspot>
+  </a-menu-item>
 </template>
 
 <script>
@@ -39,10 +40,7 @@ import LinkHotspot from "./Hotspots/LinkHotspot.vue";
 export default {
   components: { InfoHotspot, LinkHotspot },
   props: {
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+    menuKey: Number,
     sceneData: {},
     currentSceneTarget: {},
   },
@@ -124,5 +122,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
