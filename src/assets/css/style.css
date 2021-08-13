@@ -49,38 +49,18 @@ a:visited {
     height: auto;
 }
 
-#titleBar {
-    position: relative;
-    top: 0;
-    left: 0;
-    height: 6.5rem;
-    width: 100%;
-    background: transparent;
-}
-
-.titleCard {
-    position: relative;
-    top: 1rem;
-    z-index: 1000;
-    display: inline-block;
-    background-color: #2F3590;
-    padding: 1.5rem;
-    box-shadow: 2px 2px 8px rgb(0,0,0, 0.8);
-}
-
-/* If there is a fullscreen button the title bar must make space for it */
-body.fullscreen-enabled #titleBar {
-    right: 80px;
-}
-
-body.fullscreen-enabled.mobile #titleBar {
-    right: 100px;
+.header {
+    color: white;
+    height: 2rem;
+    line-height: 2rem;
+    z-index: 999;
+    padding-left: 5px;
 }
 
 .sceneName {
     padding: 5px;
     font-weight: 600;
-    line-height: 20px;
+    line-height: 2rem;
 
     -moz-user-select: text;
     -webkit-user-select: text;
@@ -88,14 +68,9 @@ body.fullscreen-enabled.mobile #titleBar {
     user-select: text;
 }
 
-.viewScenes {
-    font-size: small;
-    font-style: italic;
-}
-
 .viewScenes:hover {
-    text-decoration: underline;
     cursor: pointer;
+    color:rgba(255, 255, 255, 0.7);
 }
 
 .footer {
@@ -224,53 +199,29 @@ body.fullscreen-enabled.mobile #autorotateToggle {
     display: none;
 }
 
-/* View control buttons */
-
-.viewControlButton {
-    display: none;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 40px;
-    height: 40px;
-    padding: 5px;
-}
-
-body.view-control-buttons .viewControlButton {
-    display: block;
-}
+/* Scrollbar Styles */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  ::-webkit-scrollbar-thumb{
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  ::-webkit-scrollbar-thumb:hover{
+  	background: rgba(255, 255, 255, 0.4);
+  }
+  ::-webkit-scrollbar-thumb:active{
+  	background: rgba(255, 255, 255, 0.9);
+  }
 
 /* Hide controls when width is too small */
 @media (max-width: 600px) {
-    body.view-control-buttons .viewControlButton {
+    .controlPanel {
         display: none;
     }
-}
-
-.viewControlButton .icon {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 30px;
-    height: 30px;
-}
-
-/* Center is at margin-left: -20px */
-.viewControlButton-1 {
-    margin-left: -145px;
-}
-.viewControlButton-2 {
-    margin-left: -95px;
-}
-.viewControlButton-3 {
-    margin-left: -45px;
-}
-.viewControlButton-4 {
-    margin-left: 5px;
-}
-.viewControlButton-5 {
-    margin-left: 55px;
-}
-.viewControlButton-6 {
-    margin-left: 105px;
 }

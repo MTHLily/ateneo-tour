@@ -65,8 +65,7 @@ export default {
             targetFov: Math.PI / 2,
         });
 
-        this.viewer.startMovement(this.autorotate);
-        this.viewer.setIdleMovement(3000, this.autorotate);
+        this.toggleAutorotate(false);
     },
     toggleAutorotate(isRotating) {
       if (!isRotating) {

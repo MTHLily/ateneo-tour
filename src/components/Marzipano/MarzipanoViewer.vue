@@ -21,41 +21,35 @@
             </marzipano-scene-list>
         </a-layout-sider>
 
-        <a-layout-content>
-            <div id="titleBar">
-                <div class="titleCard">
-                    <div>
-                        <span>Currently Viewing: </span>
-                        <span class="sceneName" v-if="scenes.length">
-                            {{ getCurrentSceneWithData().data.name }}
-                        </span>
-                    </div>
-
-                    <span v-if="isSidebarCollapsed" class="viewScenes" @click="setCollapse(false)">
-                        <i class="fas fa-chevron-circle-right"></i>
-                        See locations
+        <a-layout>
+            <a-layout-header class="header">
+                <div class="viewScenes" @click="setCollapse(!isSidebarCollapsed)">
+                    <span>
+                        <i class="fas"
+                        :class="[isSidebarCollapsed ? 'fa-chevron-circle-right' : 'fa-chevron-circle-left']"
+                        ></i>
                     </span>
-                    <span v-else class="viewScenes" @click="setCollapse(true)">
-                        <i class="fas fa-chevron-circle-left"></i>
-                        Close locations
+                    <span class="sceneName" v-if="scenes.length">
+                        {{ getCurrentSceneWithData().data.name }}
                     </span>
-
                 </div>
-            </div>
+            </a-layout-header>
 
-            <div class="marzipano-viewer-container">
-                <div id="pano" @click="getCoordinates"></div>
-            </div>
+            <a-layout-content>
+                <div class="marzipano-viewer-container">
+                    <div id="pano" @click="getCoordinates"></div>
+                </div>
 
-            <div class="footer">
-                <marzipano-camera-controls
-                    :velocity="cameraSpeed.velocity"
-                    :friction="cameraSpeed.friction"
-                    ref="cameraControls"
-                ></marzipano-camera-controls>
-                <img class="arisen-watermark" src="img/arisen_logo.png" />
-            </div>
-        </a-layout-content>
+                <div class="footer">
+                    <marzipano-camera-controls
+                        :velocity="cameraSpeed.velocity"
+                        :friction="cameraSpeed.friction"
+                        ref="cameraControls"
+                    ></marzipano-camera-controls>
+                    <img class="arisen-watermark" src="img/arisen_logo.png" />
+                </div>
+            </a-layout-content>
+        </a-layout>
     </a-layout>
 </template>
 

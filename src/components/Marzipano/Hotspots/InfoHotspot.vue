@@ -9,7 +9,7 @@
     <transition name="fade">
       <a-card class="test" size="small" :title="hotspotData.title" style="width: 300px" v-show="isOpen" @mouseleave="setOpen(false)">
         <template #extra>
-          <i class="fas fa-expand"></i>
+            <i class="fas fa-expand"></i>
         </template>
         <p v-html="hotspotData.text"></p>
       </a-card>
@@ -30,7 +30,7 @@ export default {
     },
     setOpen(isOpen) {
       this.isOpen = isOpen;
-    },
+    }
   },
   data() {
     return {
